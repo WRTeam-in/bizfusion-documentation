@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Documentation — BizFusionX</title>
+<meta name="robots" content="noindex, nofollow" />
+<link rel="icon" href="favicon.ico" sizes="any" />
+<link rel="icon" href="icon.png" type="image/png" />
+<link rel="apple-touch-icon" href="apple-icon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --brand:#ff6600;
+    --brand-50:#fff2e8;
+    --brand-100:#ffe3cc;
+    --brand-200:#ffc799;
+    --brand-600:#e65c00;
+    --ink:#151F3E;
+    --cream:#FFF7F3;
+    --mist:#FFF9F5;
+    --tile:#F3F5F9;
+    --label:#666666;
+    --rule:#E6E8F0;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:'Archivo',ui-sans-serif,system-ui,sans-serif;
+    color:#111;
+    background:#fff;
+  }
+  code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;}
+
+  /* ---- hero ---- */
+  .hero{
+    position:relative;
+    isolation:isolate;
+    display:flex;
+    min-height:240px;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    padding:64px 16px;
+    text-align:center;
+  }
+  @media(min-width:640px){ .hero{min-height:300px;} }
+  @media(min-width:1024px){ .hero{min-height:347px;} }
+  .hero-bg{
+    position:absolute;inset:0;z-index:-2;
+    width:100%;height:100%;object-fit:cover;
+  }
+  .hero-scrim{
+    position:absolute;inset:0;z-index:-1;
+    background:rgba(0,0,0,.72);
+  }
+  .hero-bar{
+    position:absolute;top:0;bottom:0;z-index:-1;
+    object-fit:cover;pointer-events:none;
+    display:none;
+  }
+  @media(min-width:640px){ .hero-bar{display:block;} }
+  .hero-bar.left-small{left:0;width:157px;object-position:left top;}
+  .hero-bar.left-big{left:0;width:294px;object-position:left top;}
+  .hero-bar.right-small{right:0;width:156px;object-position:right top;}
+  .hero-bar.right-big{right:0;width:294px;object-position:right top;}
+  .hero h1{
+    margin:0;
+    max-width:744px;
+    font-size:36px;
+    line-height:44px;
+    font-weight:700;
+    color:#fff;
+  }
+  @media(min-width:640px){ .hero h1{font-size:44px;line-height:54px;} }
+  @media(min-width:1024px){ .hero h1{font-size:56px;line-height:67px;} }
+  .crumbs{
+    margin-top:24px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    font-size:16px;
+    line-height:24px;
+  }
+  .crumbs a{color:#fff;text-decoration:none;font-weight:500;}
+  .crumbs a:hover{color:var(--brand);}
+  .crumbs .chev{display:flex;align-items:center;color:#fff;}
+  .crumbs .chev svg{width:16px;height:16px;}
+  .crumbs span.current{color:var(--brand);font-weight:600;}
+
+  /* ---- layout ---- */
+  .container{max-width:1120px;margin:0 auto;padding:0 24px;}
+  .body-wrap{padding:64px 0 96px;}
+  .intro-block{max-width:840px;}
+  .intro-kicker{
+    font-size:14px;font-weight:600;letter-spacing:.04em;
+    text-transform:uppercase;color:var(--brand);margin:0;
+  }
+  .intro-text{margin:16px 0 0;font-size:16px;line-height:28px;font-weight:500;color:var(--label);}
+
+  .grid{
+    margin-top:48px;
+    display:grid;
+    grid-template-columns:1fr;
+    gap:40px;
+  }
+  @media(min-width:1024px){
+    .grid{grid-template-columns:280px 1fr;gap:40px 60px;}
+  }
+
+  .toc{align-self:start;}
+  @media(min-width:1024px){ .toc{position:sticky;top:28px;} }
+  .toc-title{margin:0;font-size:16px;line-height:24px;font-weight:600;color:#000;}
+  .toc nav{margin-top:16px;border-left:1px solid var(--rule);}
+  .toc ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;}
+  .toc li a{
+    margin-left:-1px;
+    display:block;
+    border-left:1px solid transparent;
+    padding:8px 0 8px 16px;
+    font-size:16px;line-height:24px;font-weight:500;
+    color:var(--label);
+    text-decoration:none;
+    transition:color .15s,border-color .15s;
+  }
+  .toc li a:hover,.toc li a.active{border-left-color:var(--brand);color:var(--brand);}
+
+  .content{min-width:0;display:flex;flex-direction:column;gap:40px;}
+  article{scroll-margin-top:28px;}
+  article h2{margin:0;font-size:24px;line-height:32px;font-weight:600;color:#000;}
+  article p{margin:16px 0 0;font-size:16px;line-height:28px;font-weight:500;color:var(--label);}
+  article p code, article li code, td code{
+    border-radius:4px;background:var(--tile);padding:2px 6px;
+    font-size:.875em;font-weight:600;color:var(--ink);
+  }
+
+  pre.code-block{
+    margin:16px 0 0;overflow-x:auto;border-radius:8px;
+    background:var(--ink);padding:16px 20px;
+  }
+  pre.code-block code{
+    display:block;white-space:pre;font-size:14px;line-height:24px;color:#fff;
+  }
+
+  .table-wrap{margin:16px 0 0;overflow-x:auto;border-radius:8px;border:1px solid var(--rule);}
+  table{width:100%;border-collapse:collapse;text-align:left;}
+  thead tr{border-bottom:1px solid var(--rule);background:var(--cream);}
+  th{padding:12px 16px;font-size:14px;line-height:20px;font-weight:600;color:#000;}
+  td{padding:12px 16px;vertical-align:top;font-size:14px;line-height:24px;}
+  tbody tr{border-bottom:1px solid var(--rule);}
+  tbody tr:last-child{border-bottom:0;}
+  td.key{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-weight:600;color:var(--ink);}
+  td.value{font-weight:500;color:var(--label);}
+
+  ul.bullets{margin:16px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:12px;}
+  ul.bullets li{display:flex;gap:12px;}
+  ul.bullets li .dot{margin-top:10px;width:6px;height:6px;flex-shrink:0;border-radius:50%;background:var(--brand);}
+  ul.bullets li span.txt{font-size:16px;line-height:28px;font-weight:500;color:var(--label);}
+
+  .note{
+    margin:16px 0 0;border-radius:8px;border-left:4px solid var(--brand);
+    background:var(--brand-50);padding:16px 20px;
+    font-size:16px;line-height:28px;font-weight:500;color:#000;
+  }
+  .note + .note{margin-top:12px;}
+
+  ul.links{margin:16px 0 0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:12px;}
+  ul.links a{
+    display:inline-flex;align-items:center;gap:6px;
+    border-radius:999px;border:1px solid var(--rule);background:var(--tile);
+    padding:8px 16px;font-size:14px;line-height:20px;font-weight:600;color:var(--ink);
+    text-decoration:none;transition:border-color .15s,background .15s,color .15s;
+  }
+  ul.links a:hover{border-color:var(--brand);background:var(--brand-50);color:var(--brand);}
+  ul.links a svg{width:14px;height:14px;flex-shrink:0;}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <img class="hero-bg" src="images/about/breadcrumb.png" alt="" />
+  <div class="hero-scrim"></div>
+  <img class="hero-bar left-small" src="images/about/bar-left-small.svg" alt="" />
+  <img class="hero-bar left-big" src="images/about/bar-left-big.svg" alt="" />
+  <img class="hero-bar right-small" src="images/about/bar-right-small.svg" alt="" />
+  <img class="hero-bar right-big" src="images/about/bar-right-big.svg" alt="" />
+
+  <div>
+    <h1>Documentation</h1>
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="#">Home</a>
+      <span class="chev">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="7 17 12 12 7 7"/><polyline points="13 17 18 12 13 7"/></svg>
+      </span>
+      <span class="current">Documentation</span>
+    </nav>
+  </div>
+</section>
+
+<div class="container body-wrap">
+  <div class="intro-block">
+    <p class="intro-kicker">BizFusionX — Documentation</p>
+    <p class="intro-text">Business consulting / agency site template, built on Next.js 16. This page covers install, content editing, branding and deploy.</p>
+  </div>
+
+  <div class="grid">
+    <aside class="toc">
+      <p class="toc-title">On this page</p>
+      <nav aria-label="Table of contents">
+        <ul id="toc-list"></ul>
+      </nav>
+    </aside>
+
+    <div class="content" id="sections"></div>
+  </div>
+</div>
+
+<script>
+const ARROW_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>';
+
+function inlineCode(text){
+  return text.split(/(`[^`]+`)/g).map(part =>
+    part.startsWith('`') && part.endsWith('`')
+      ? `<code>${escapeHtml(part.slice(1,-1))}</code>`
+      : escapeHtml(part)
+  ).join('');
+}
+function escapeHtml(s){
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+const doc = {
+  sections: [
+    {
+      id: "requirements", title: "1. Requirements",
+      body: ["Two things needed before setup: Node.js (npm comes bundled with it) and a code editor. Steps below cover Windows, macOS and Linux — skip any tool you already have installed."],
+      table: { head: ["Tool","Install"], rows: [
+        ["Node.js 20+ — Windows","Download the LTS `.msi` installer from the Node.js link below, run it, keep every default in the wizard. npm installs automatically with it."],
+        ["Node.js 20+ — macOS","Download the LTS `.pkg` installer from the Node.js link below and run it — or, with Homebrew installed, run `brew install node`."],
+        ["Node.js 20+ — Linux","Use your distro's package manager (e.g. `sudo apt install nodejs npm` on Ubuntu/Debian), or install via `nvm` for easy version switching."],
+        ["VS Code — all platforms","Download the installer for your OS from the VS Code link below, run it, keep the defaults."]
+      ]},
+      code: "node -v\nnpm -v",
+      notes: [
+        "Close and reopen your terminal (or restart VS Code's integrated terminal) after installing Node.js — a terminal opened before the install won't see the new `node`/`npm` commands.",
+        "`node -v` and `npm -v` should print version numbers, not \"command not found\". If they don't, the install didn't complete or your terminal needs restarting."
+      ],
+      links: [
+        { label: "Download Node.js", href: "https://nodejs.org/en/download" },
+        { label: "Download VS Code", href: "https://code.visualstudio.com/download" },
+        { label: "nvm (Node Version Manager)", href: "https://github.com/nvm-sh/nvm" }
+      ]
+    },
+    {
+      id: "install", title: "2. Install",
+      body: ["Open `http://localhost:3000` once the dev server is running."],
+      code: "npm install\ncp .env.example .env.local\nnpm run dev"
+    },
+    {
+      id: "env", title: "3. Environment Variables",
+      body: ["Set in `.env.local` for local dev, or in your host's build-environment settings for production."],
+      table: { head: ["Variable","Purpose"], rows: [
+        ["NEXT_PUBLIC_SITE_URL (required)","Canonical URL, OG tags, `robots.txt`, `sitemap.xml`"],
+        ["NEXT_PUBLIC_API_URL (optional)","Backend/API origin, only if you wire the forms to a real API"]
+      ]},
+      notes: ["These are inlined at build time — changing them on a running server has no effect. A missing or malformed `NEXT_PUBLIC_SITE_URL` fails the build on purpose, so a bad config is caught before deploy, not after."]
+    },
+    {
+      id: "scripts", title: "4. Scripts",
+      table: { head: ["Command","Does"], rows: [
+        ["npm run dev","dev server (Turbopack)"],
+        ["npm run build","production build"],
+        ["npm run start","run the production build"],
+        ["npm run lint / lint:fix","ESLint"],
+        ["npm run typecheck","`tsc --noEmit`"],
+        ["npm run format / format:check","Prettier"],
+        ["npm run ui:add -- <name>","add a shadcn/ui component, e.g. `npm run ui:add -- calendar`"]
+      ]}
+    },
+    {
+      id: "pages", title: "5. Pages Included",
+      table: { head: ["Route","Purpose"], rows: [
+        ["/","Home"],
+        ["/about","About"],
+        ["/services, /services/[slug]","Services list + detail"],
+        ["/projects, /projects/[slug]","Portfolio list + case study"],
+        ["/blogs, /blog/[slug]","Blog list + post"],
+        ["/contact","Contact form"],
+        ["/faq","FAQ"],
+        ["/careers","Careers"],
+        ["/help","Help center"],
+        ["/terms, /privacy","Legal"]
+      ]}
+    },
+    {
+      id: "content", title: "6. Editing Content",
+      body: ["All page copy lives as typed data files in `src/data` — no hardcoded text in components. Each file's shape is defined in `src/types/index.ts`. To change content, edit the matching data file; you don't need to touch component code."],
+      table: { head: ["Data file","Feeds"], rows: [
+        ["site.ts (in src/config)","Site name, description, contact info, social links, header CTA"],
+        ["nav.ts (in src/config)","Header nav + footer link columns"],
+        ["services.ts, service-details.ts","Services list + detail pages"],
+        ["projects.ts, project-overview.ts, project-case-studies.ts","Portfolio + case studies"],
+        ["blogs.ts, blog.ts, blog-post-body.ts, blog-comments.ts, blog-sidebar.ts","Blog list, post body, comments, sidebar"],
+        ["about.ts, team.ts, process.ts, stories.ts","About page"],
+        ["testimonials.ts, clients.ts, marquee.ts","Social proof sections"],
+        ["faqs.ts, faq-groups.ts","FAQ page"],
+        ["careers.ts, help.ts, legal.ts","Careers, help center, terms/privacy"]
+      ]},
+      notes: ["Company name, phone, email, address and social links are all in one place: `src/config/site.ts` — edit that first when rebranding."]
+    },
+    {
+      id: "images", title: "7. Images",
+      body: ["Under `public/images`, one folder per page (`home/`, `about/`, `services/`, `projects/`, `blog/`, `global/`). Replace files in place, same filenames, to swap images without touching code. Match the original image's aspect ratio to avoid layout shift."]
+    },
+    {
+      id: "branding", title: "8. Branding — Colors, Fonts",
+      body: ["All theme tokens are in `src/app/globals.css` under `@theme inline`. This is a Tailwind v4 CSS-first theme — there is no `tailwind.config.js` color object to edit."],
+      bullets: [
+        "Brand color — `--color-brand: #ff6600`, plus its tints: `-50`, `-100`, `-200`, `-600`. Every component references these tokens (`bg-brand`, `text-brand`, `bg-brand-50`, etc.), not raw hex, so editing the values here re-themes the whole site.",
+        "Other tokens — `ink` (`#151F3E`, navy text/dark sections), `cream` (`#FFF7F3`, hero background), `mist` (`#FFF9F5`, alternate section background), `tile` (`#F3F5F9`, icon-tile/inset-panel fill), `label` (`#666666`, secondary text), `rule` (`#E6E8F0`, hairlines).",
+        "Font — Archivo, loaded once in `src/lib/fonts.ts` via `next/font/google` (self-hosted, no external request). To swap fonts, change the import there; it's mapped onto `--font-sans` / `--font-heading` so the rest of the app doesn't need touching.",
+        "Dark mode — via `next-themes` (class strategy), toggle already wired."
+      ],
+      notes: [
+        "Don't use Tailwind's built-in `orange-*` classes for brand color — `orange-500` is `#f97316`, a different hue than the template's `#FF6600`.",
+        "This is `@theme inline` — Tailwind bakes each token's literal value into every utility class at build time; it does not stay a live CSS variable in the browser. Editing `globals.css` and letting the dev server (or a fresh build) recompile is what applies a change.",
+        "Two spots can't read this file at all and must be hand-edited to match: `src/lib/og-image.tsx` (the OG/share-card image, rendered via Satori) and `src/app/manifest.ts` (`theme_color` for the installed PWA). Both hardcode `#FF6600` / `#151F3E` directly."
+      ]
+    },
+    {
+      id: "navigation", title: "9. Navigation",
+      body: ["Edit `src/config/nav.ts`:"],
+      bullets: [
+        "`mainNav` — header links + the Services mega-menu (auto-built from `src/data/services.ts`, so adding a service there adds it to the menu too)",
+        "`footerNav` — footer link columns"
+      ]
+    },
+    {
+      id: "forms", title: "10. Forms",
+      body: ["Contact and newsletter forms use `react-hook-form` + `zod`. Validation rules live in `src/schemas`, not inline in components — edit there to change required fields, min lengths, error copy, etc."],
+      notes: ["Forms currently submit client-side only — no backend wired. Point them at your API/CMS using `NEXT_PUBLIC_API_URL` when ready."]
+    },
+    {
+      id: "structure", title: "11. Project Structure",
+      code: `src/
+├── app/            # one folder per route (App Router)
+├── components/
+│   ├── ui/         # shadcn primitives — regenerated via ui:add, edit sparingly
+│   ├── layout/     # header, footer, container, logo, nav, drawer
+│   ├── sections/   # page sections (Hero, NewsletterForm, …)
+│   └── shared/     # cross-cutting pieces (PageHero, SectionHeading, …)
+├── config/         # site metadata + navigation
+├── data/           # page content (the files you edit)
+├── schemas/        # zod validation for every form
+├── types/          # content shape definitions
+├── lib/            # utils, fonts, env, constants
+├── hooks/          # useMediaQuery, useZodForm
+└── providers/      # theme + tooltip providers
+public/images/      # one folder per page`
+    },
+    {
+      id: "deploy", title: "12. Deploy",
+      body: ["Deploys to any Next.js host (Vercel, Netlify, self-hosted Node). Set `NEXT_PUBLIC_SITE_URL` in the host's build environment before building."],
+      code: "npm run build\nnpm run start"
+    },
+    {
+      id: "resources", title: "13. Resources",
+      body: ["Official docs for everything this template is built on:"],
+      links: [
+        { label: "Next.js docs", href: "https://nextjs.org/docs" },
+        { label: "Tailwind CSS v4 docs", href: "https://tailwindcss.com/docs" },
+        { label: "shadcn/ui", href: "https://ui.shadcn.com" },
+        { label: "Radix Primitives", href: "https://www.radix-ui.com/primitives" },
+        { label: "React Hook Form", href: "https://react-hook-form.com" },
+        { label: "Zod", href: "https://zod.dev" },
+        { label: "Framer Motion", href: "https://motion.dev" },
+        { label: "Deploy on Vercel", href: "https://vercel.com/docs" }
+      ]
+    },
+    {
+      id: "support", title: "14. Support",
+      body: ["No backend/CMS included — frontend template only, content wired through `src/data`. For customization beyond content/branding (new sections, new routes), follow the pattern in section 11: new page section → `components/sections`, compose in the route's `page.tsx`."]
+    }
+  ]
+};
+
+const tocList = document.getElementById('toc-list');
+const sectionsEl = document.getElementById('sections');
+
+doc.sections.forEach(section => {
+  const li = document.createElement('li');
+  li.innerHTML = `<a href="#${section.id}">${section.title}</a>`;
+  tocList.appendChild(li);
+
+  const article = document.createElement('article');
+  article.id = section.id;
+  let html = `<h2>${section.title}</h2>`;
+
+  (section.body || []).forEach(p => { html += `<p>${inlineCode(p)}</p>`; });
+
+  if (section.code) {
+    html += `<pre class="code-block"><code>${escapeHtml(section.code)}</code></pre>`;
+  }
+
+  if (section.table) {
+    html += `<div class="table-wrap"><table><thead><tr>`;
+    section.table.head.forEach(h => html += `<th>${escapeHtml(h)}</th>`);
+    html += `</tr></thead><tbody>`;
+    section.table.rows.forEach(([k,v]) => {
+      html += `<tr><td class="key">${escapeHtml(k)}</td><td class="value">${inlineCode(v)}</td></tr>`;
+    });
+    html += `</tbody></table></div>`;
+  }
+
+  if (section.bullets) {
+    html += `<ul class="bullets">`;
+    section.bullets.forEach(b => {
+      html += `<li><span class="dot"></span><span class="txt">${inlineCode(b)}</span></li>`;
+    });
+    html += `</ul>`;
+  }
+
+  (section.notes || []).forEach(note => {
+    html += `<div class="note">${inlineCode(note)}</div>`;
+  });
+
+  if (section.links) {
+    html += `<ul class="links">`;
+    section.links.forEach(link => {
+      html += `<li><a href="${link.href}" target="_blank" rel="noopener noreferrer">${escapeHtml(link.label)}${ARROW_SVG}</a></li>`;
+    });
+    html += `</ul>`;
+  }
+
+  article.innerHTML = html;
+  sectionsEl.appendChild(article);
+});
+
+// active TOC highlight on scroll
+const links = Array.from(tocList.querySelectorAll('a'));
+const articles = Array.from(sectionsEl.querySelectorAll('article'));
+function onScroll(){
+  let activeId = articles[0]?.id;
+  for (const a of articles) {
+    if (a.getBoundingClientRect().top - 120 <= 0) activeId = a.id;
+  }
+  links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === `#${activeId}`));
+}
+document.addEventListener('scroll', onScroll);
+onScroll();
+</script>
+</body>
+</html>
